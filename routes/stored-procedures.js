@@ -199,9 +199,9 @@ router.get('/empleados', async (req, res) => {
 // Insertar empleado
 router.post('/empleados', async (req, res) => {
   try {
-    const { nombre, cargo, telefono, email, salario } = req.body;
+    const { nombre, puesto, fecha_contratacion, salario, estatus } = req.body;
     const [result] = await pool.execute('CALL sp_insertar_empleado(?, ?, ?, ?, ?)', 
-      [nombre, cargo, telefono, email, salario]);
+      [nombre, puesto, fecha_contratacion, salario, estatus]);
     res.json({ success: true, message: 'Empleado agregado correctamente', id: result[0][0].id });
   } catch (error) {
     res.status(500).json({ success: false, message: error.message });
@@ -212,9 +212,9 @@ router.post('/empleados', async (req, res) => {
 router.put('/empleados/:id', async (req, res) => {
   try {
     const { id } = req.params;
-    const { nombre, cargo, telefono, email, salario } = req.body;
+    const { nombre, puesto, fecha_contratacion, salario, estatus } = req.body;
     await pool.execute('CALL sp_actualizar_empleado(?, ?, ?, ?, ?, ?)', 
-      [id, nombre, cargo, telefono, email, salario]);
+      [id, nombre, puesto, fecha_contratacion, salario, estatus]);
     res.json({ success: true, message: 'Empleado actualizado correctamente' });
   } catch (error) {
     res.status(500).json({ success: false, message: error.message });

@@ -389,14 +389,16 @@ function createEmpleadosModule() {
                             <tr>
                                 <th>ID</th>
                                 <th>Nombre</th>
-                                <th>Cargo</th>
-                                <th>Teléfono</th>
+                                <th>Puesto</th>
+                                <th>Fecha Contratación</th>
+                                <th>Salario</th>
+                                <th>Estatus</th>
                                 <th>Acciones</th>
                             </tr>
                         </thead>
                         <tbody id="empleadosTable">
                             <tr>
-                                <td colspan="5" class="text-center">
+                                <td colspan="7" class="text-center">
                                     <div class="spinner-border" role="status">
                                         <span class="visually-hidden">Cargando...</span>
                                     </div>

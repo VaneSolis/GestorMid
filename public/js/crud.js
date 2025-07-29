@@ -356,7 +356,7 @@ function displayEmpleados(empleados) {
   const tbody = document.getElementById('empleadosTable');
   
   if (empleados.length === 0) {
-    tbody.innerHTML = '<tr><td colspan="5" class="text-center">No hay empleados registrados</td></tr>';
+    tbody.innerHTML = '<tr><td colspan="6" class="text-center">No hay empleados registrados</td></tr>';
     return;
   }
   
@@ -364,8 +364,14 @@ function displayEmpleados(empleados) {
     <tr>
       <td>${empleado.id}</td>
       <td>${empleado.nombre}</td>
-      <td>${empleado.cargo}</td>
-      <td>${empleado.telefono || '-'}</td>
+      <td>${empleado.puesto}</td>
+      <td>${empleado.fecha_contratacion ? new Date(empleado.fecha_contratacion).toLocaleDateString() : '-'}</td>
+      <td>$${empleado.salario ? empleado.salario.toLocaleString() : '0'}</td>
+      <td>
+        <span class="badge bg-${empleado.estatus === 'Activo' ? 'success' : empleado.estatus === 'Inactivo' ? 'danger' : empleado.estatus === 'Vacaciones' ? 'warning' : 'secondary'}">
+          ${empleado.estatus || 'N/A'}
+        </span>
+      </td>
       <td>
         <button class="btn btn-sm btn-primary" onclick="editEmpleado(${empleado.id})">
           <i class="fas fa-edit"></i>
