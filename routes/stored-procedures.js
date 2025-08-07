@@ -20,8 +20,22 @@ router.get('/clientes', async (req, res) => {
 router.post('/clientes', async (req, res) => {
   try {
     const { nombre, apellido, telefono, email, direccion } = req.body;
-    const [result] = await pool.execute('CALL sp_insertar_cliente(?, ?, ?, ?, ?)', 
-      [nombre, apellido, telefono, email, direccion]);
+    
+    // Validar campos requeridos
+    if (!nombre) {
+      return res.status(400).json({ success: false, message: 'El nombre es requerido' });
+    }
+    
+    // Asignar valores por defecto para campos opcionales
+    const clienteData = [
+      nombre || '',
+      apellido || '',
+      telefono || '',
+      email || '',
+      direccion || ''
+    ];
+    
+    const [result] = await pool.execute('CALL sp_insertar_cliente(?, ?, ?, ?, ?)', clienteData);
     res.json({ success: true, message: 'Cliente agregado correctamente', data: result[0][0] });
   } catch (error) {
     res.status(500).json({ success: false, message: error.message });
@@ -85,8 +99,21 @@ router.get('/productos', async (req, res) => {
 router.post('/productos', async (req, res) => {
   try {
     const { nombre_producto, precio, stock, descripcion } = req.body;
-    const [result] = await pool.execute('CALL sp_insertar_producto(?, ?, ?, ?)', 
-      [nombre_producto, precio, stock, descripcion]);
+    
+    // Validar campos requeridos
+    if (!nombre_producto) {
+      return res.status(400).json({ success: false, message: 'El nombre del producto es requerido' });
+    }
+    
+    // Asignar valores por defecto para campos opcionales
+    const productoData = [
+      nombre_producto || '',
+      precio || 0,
+      stock || 0,
+      descripcion || ''
+    ];
+    
+    const [result] = await pool.execute('CALL sp_insertar_producto(?, ?, ?, ?)', productoData);
     res.json({ success: true, message: 'Producto agregado correctamente', data: result[0][0] });
   } catch (error) {
     res.status(500).json({ success: false, message: error.message });
@@ -211,8 +238,20 @@ router.get('/empleados', async (req, res) => {
 router.post('/empleados', async (req, res) => {
   try {
     const { nombre, puesto, salario } = req.body;
-    const [result] = await pool.execute('CALL sp_insertar_empleado(?, ?, ?)', 
-      [nombre, puesto, salario]);
+    
+    // Validar campos requeridos
+    if (!nombre) {
+      return res.status(400).json({ success: false, message: 'El nombre es requerido' });
+    }
+    
+    // Asignar valores por defecto para campos opcionales
+    const empleadoData = [
+      nombre || '',
+      puesto || '',
+      salario || 0
+    ];
+    
+    const [result] = await pool.execute('CALL sp_insertar_empleado(?, ?, ?)', empleadoData);
     res.json({ success: true, message: 'Empleado agregado correctamente', data: result[0][0] });
   } catch (error) {
     res.status(500).json({ success: false, message: error.message });
@@ -263,8 +302,21 @@ router.get('/proveedores', async (req, res) => {
 router.post('/proveedores', async (req, res) => {
   try {
     const { nombre, contacto, telefono, direccion } = req.body;
-    const [result] = await pool.execute('CALL sp_insertar_proveedor(?, ?, ?, ?)', 
-      [nombre, contacto, telefono, direccion]);
+    
+    // Validar campos requeridos
+    if (!nombre) {
+      return res.status(400).json({ success: false, message: 'El nombre es requerido' });
+    }
+    
+    // Asignar valores por defecto para campos opcionales
+    const proveedorData = [
+      nombre || '',
+      contacto || '',
+      telefono || '',
+      direccion || ''
+    ];
+    
+    const [result] = await pool.execute('CALL sp_insertar_proveedor(?, ?, ?, ?)', proveedorData);
     res.json({ success: true, message: 'Proveedor agregado correctamente', data: result[0][0] });
   } catch (error) {
     res.status(500).json({ success: false, message: error.message });
