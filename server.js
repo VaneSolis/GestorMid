@@ -4,7 +4,7 @@ const path = require('path');
 const { testConnection } = require('./config/database');
 
 const app = express();
-const PORT = process.env.PORT || 3000;
+const PORT = process.env.PORT || 8080; // Cambiado para Clever Cloud
 
 // Middleware
 app.use(cors());
@@ -47,5 +47,6 @@ app.get('/api/database-info', async (req, res) => {
 app.use('/api', require('./routes/stored-procedures'));
 
 app.listen(PORT, () => {
-  console.log(`🚀 Servidor corriendo en http://localhost:${PORT}`);
+  console.log(`🚀 Servidor corriendo en puerto ${PORT}`);
+  console.log(`🌍 Entorno: ${process.env.NODE_ENV || 'development'}`);
 }); 
