@@ -14,15 +14,12 @@ app.use(express.static('public'));
 // Probar conexión a la base de datos
 testConnection();
 
-// Rutas API
-app.use('/api', require('./routes/stored-procedures'));
-
 // Ruta principal
 app.get('/', (req, res) => {
   res.sendFile(path.join(__dirname, 'public', 'index.html'));
 });
 
-// Ruta para probar conexión
+// Ruta para probar conexión (DEBE IR ANTES DE /api)
 app.get('/api/test-connection', async (req, res) => {
   try {
     const isConnected = await testConnection();
@@ -35,7 +32,7 @@ app.get('/api/test-connection', async (req, res) => {
   }
 });
 
-// Ruta para obtener información de la base de datos
+// Ruta para obtener información de la base de datos (DEBE IR ANTES DE /api)
 app.get('/api/database-info', async (req, res) => {
   try {
     const { getTables } = require('./config/database');
@@ -45,6 +42,9 @@ app.get('/api/database-info', async (req, res) => {
     res.status(500).json({ success: false, message: error.message });
   }
 });
+
+// Rutas API (DEBE IR DESPUÉS)
+app.use('/api', require('./routes/stored-procedures'));
 
 app.listen(PORT, () => {
   console.log(`🚀 Servidor corriendo en http://localhost:${PORT}`);
