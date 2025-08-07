@@ -1,0 +1,453 @@
+{
+  "info": {
+    "name": "GestorMID API - Tortillería La Herradura",
+    "description": "API completa para el sistema de gestión de la Tortillería La Herradura",
+    "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
+  },
+  "variable": [
+    {
+      "key": "BASE_URL",
+      "value": "https://app-ffbb7ac6-ac73-4119-ba6a-51c126b717ec.cleverapps.io",
+      "type": "string"
+    }
+  ],
+  "item": [
+    {
+      "name": "🔍 Pruebas de Conexión",
+      "item": [
+        {
+          "name": "Test Connection",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "{{BASE_URL}}/api/test-connection",
+              "host": ["{{BASE_URL}}"],
+              "path": ["api", "test-connection"]
+            }
+          }
+        },
+        {
+          "name": "Database Info",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "{{BASE_URL}}/api/database-info",
+              "host": ["{{BASE_URL}}"],
+              "path": ["api", "database-info"]
+            }
+          }
+        }
+      ]
+    },
+    {
+      "name": "👥 Clientes",
+      "item": [
+        {
+          "name": "Listar Clientes",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "{{BASE_URL}}/api/clientes",
+              "host": ["{{BASE_URL}}"],
+              "path": ["api", "clientes"]
+            }
+          }
+        },
+        {
+          "name": "Crear Cliente",
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"nombre\": \"Nuevo Cliente\",\n  \"telefono\": \"555-1234\",\n  \"email\": \"cliente@email.com\",\n  \"direccion\": \"Calle Nueva 123\"\n}"
+            },
+            "url": {
+              "raw": "{{BASE_URL}}/api/clientes",
+              "host": ["{{BASE_URL}}"],
+              "path": ["api", "clientes"]
+            }
+          }
+        },
+        {
+          "name": "Obtener Cliente por ID",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "{{BASE_URL}}/api/clientes/1",
+              "host": ["{{BASE_URL}}"],
+              "path": ["api", "clientes", "1"]
+            }
+          }
+        },
+        {
+          "name": "Actualizar Cliente",
+          "request": {
+            "method": "PUT",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"nombre\": \"Cliente Actualizado\",\n  \"telefono\": \"555-5678\",\n  \"email\": \"actualizado@email.com\",\n  \"direccion\": \"Nueva Dirección 456\"\n}"
+            },
+            "url": {
+              "raw": "{{BASE_URL}}/api/clientes/1",
+              "host": ["{{BASE_URL}}"],
+              "path": ["api", "clientes", "1"]
+            }
+          }
+        },
+        {
+          "name": "Eliminar Cliente",
+          "request": {
+            "method": "DELETE",
+            "header": [],
+            "url": {
+              "raw": "{{BASE_URL}}/api/clientes/1",
+              "host": ["{{BASE_URL}}"],
+              "path": ["api", "clientes", "1"]
+            }
+          }
+        }
+      ]
+    },
+    {
+      "name": "📦 Productos",
+      "item": [
+        {
+          "name": "Listar Productos",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "{{BASE_URL}}/api/productos",
+              "host": ["{{BASE_URL}}"],
+              "path": ["api", "productos"]
+            }
+          }
+        },
+        {
+          "name": "Crear Producto",
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"nombre\": \"Tortillas Especiales\",\n  \"precio\": 20.00,\n  \"stock\": 50,\n  \"descripcion\": \"Tortillas de maíz especiales\"\n}"
+            },
+            "url": {
+              "raw": "{{BASE_URL}}/api/productos",
+              "host": ["{{BASE_URL}}"],
+              "path": ["api", "productos"]
+            }
+          }
+        },
+        {
+          "name": "Obtener Producto por ID",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "{{BASE_URL}}/api/productos/1",
+              "host": ["{{BASE_URL}}"],
+              "path": ["api", "productos", "1"]
+            }
+          }
+        },
+        {
+          "name": "Actualizar Producto",
+          "request": {
+            "method": "PUT",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"nombre\": \"Tortillas Premium\",\n  \"precio\": 25.00,\n  \"stock\": 75,\n  \"descripcion\": \"Tortillas premium de maíz azul\"\n}"
+            },
+            "url": {
+              "raw": "{{BASE_URL}}/api/productos/1",
+              "host": ["{{BASE_URL}}"],
+              "path": ["api", "productos", "1"]
+            }
+          }
+        },
+        {
+          "name": "Eliminar Producto",
+          "request": {
+            "method": "DELETE",
+            "header": [],
+            "url": {
+              "raw": "{{BASE_URL}}/api/productos/1",
+              "host": ["{{BASE_URL}}"],
+              "path": ["api", "productos", "1"]
+            }
+          }
+        }
+      ]
+    },
+    {
+      "name": "👨‍💼 Empleados",
+      "item": [
+        {
+          "name": "Listar Empleados",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "{{BASE_URL}}/api/empleados",
+              "host": ["{{BASE_URL}}"],
+              "path": ["api", "empleados"]
+            }
+          }
+        },
+        {
+          "name": "Crear Empleado",
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"nombre\": \"Nuevo Empleado\",\n  \"cargo\": \"Vendedor\",\n  \"telefono\": \"555-5678\",\n  \"email\": \"empleado@tortilleria.com\",\n  \"salario\": 6000.00\n}"
+            },
+            "url": {
+              "raw": "{{BASE_URL}}/api/empleados",
+              "host": ["{{BASE_URL}}"],
+              "path": ["api", "empleados"]
+            }
+          }
+        },
+        {
+          "name": "Obtener Empleado por ID",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "{{BASE_URL}}/api/empleados/1",
+              "host": ["{{BASE_URL}}"],
+              "path": ["api", "empleados", "1"]
+            }
+          }
+        },
+        {
+          "name": "Actualizar Empleado",
+          "request": {
+            "method": "PUT",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"nombre\": \"Empleado Actualizado\",\n  \"cargo\": \"Supervisor\",\n  \"telefono\": \"555-9999\",\n  \"email\": \"supervisor@tortilleria.com\",\n  \"salario\": 8000.00\n}"
+            },
+            "url": {
+              "raw": "{{BASE_URL}}/api/empleados/1",
+              "host": ["{{BASE_URL}}"],
+              "path": ["api", "empleados", "1"]
+            }
+          }
+        },
+        {
+          "name": "Eliminar Empleado",
+          "request": {
+            "method": "DELETE",
+            "header": [],
+            "url": {
+              "raw": "{{BASE_URL}}/api/empleados/1",
+              "host": ["{{BASE_URL}}"],
+              "path": ["api", "empleados", "1"]
+            }
+          }
+        }
+      ]
+    },
+    {
+      "name": "🏭 Proveedores",
+      "item": [
+        {
+          "name": "Listar Proveedores",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "{{BASE_URL}}/api/proveedores",
+              "host": ["{{BASE_URL}}"],
+              "path": ["api", "proveedores"]
+            }
+          }
+        },
+        {
+          "name": "Crear Proveedor",
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"nombre\": \"Proveedor Nuevo\",\n  \"telefono\": \"555-1111\",\n  \"email\": \"proveedor@email.com\",\n  \"direccion\": \"Calle Proveedor 789\",\n  \"producto\": \"Maíz\"\n}"
+            },
+            "url": {
+              "raw": "{{BASE_URL}}/api/proveedores",
+              "host": ["{{BASE_URL}}"],
+              "path": ["api", "proveedores"]
+            }
+          }
+        },
+        {
+          "name": "Actualizar Proveedor",
+          "request": {
+            "method": "PUT",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"nombre\": \"Proveedor Actualizado\",\n  \"telefono\": \"555-2222\",\n  \"email\": \"actualizado@proveedor.com\",\n  \"direccion\": \"Nueva Dirección Proveedor\",\n  \"producto\": \"Maíz Premium\"\n}"
+            },
+            "url": {
+              "raw": "{{BASE_URL}}/api/proveedores/1",
+              "host": ["{{BASE_URL}}"],
+              "path": ["api", "proveedores", "1"]
+            }
+          }
+        },
+        {
+          "name": "Eliminar Proveedor",
+          "request": {
+            "method": "DELETE",
+            "header": [],
+            "url": {
+              "raw": "{{BASE_URL}}/api/proveedores/1",
+              "host": ["{{BASE_URL}}"],
+              "path": ["api", "proveedores", "1"]
+            }
+          }
+        }
+      ]
+    },
+    {
+      "name": "💰 Ventas",
+      "item": [
+        {
+          "name": "Listar Ventas",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "{{BASE_URL}}/api/ventas",
+              "host": ["{{BASE_URL}}"],
+              "path": ["api", "ventas"]
+            }
+          }
+        },
+        {
+          "name": "Crear Venta",
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"cliente_id\": 1,\n  \"empleado_id\": 1,\n  \"fecha\": \"2024-01-15\",\n  \"total\": 150.00,\n  \"detalles\": [\n    {\n      \"producto_id\": 1,\n      \"cantidad\": 5,\n      \"precio_unitario\": 20.00,\n      \"subtotal\": 100.00\n    },\n    {\n      \"producto_id\": 2,\n      \"cantidad\": 2,\n      \"precio_unitario\": 25.00,\n      \"subtotal\": 50.00\n    }\n  ]\n}"
+            },
+            "url": {
+              "raw": "{{BASE_URL}}/api/ventas",
+              "host": ["{{BASE_URL}}"],
+              "path": ["api", "ventas"]
+            }
+          }
+        },
+        {
+          "name": "Obtener Venta por ID",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "{{BASE_URL}}/api/ventas/1",
+              "host": ["{{BASE_URL}}"],
+              "path": ["api", "ventas", "1"]
+            }
+          }
+        }
+      ]
+    },
+    {
+      "name": "🛒 Compras",
+      "item": [
+        {
+          "name": "Listar Compras",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "{{BASE_URL}}/api/compras",
+              "host": ["{{BASE_URL}}"],
+              "path": ["api", "compras"]
+            }
+          }
+        },
+        {
+          "name": "Crear Compra",
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"proveedor_id\": 1,\n  \"empleado_id\": 1,\n  \"fecha\": \"2024-01-15\",\n  \"total\": 500.00,\n  \"detalles\": [\n    {\n      \"producto_id\": 1,\n      \"cantidad\": 20,\n      \"precio_unitario\": 15.00,\n      \"subtotal\": 300.00\n    },\n    {\n      \"producto_id\": 2,\n      \"cantidad\": 10,\n      \"precio_unitario\": 20.00,\n      \"subtotal\": 200.00\n    }\n  ]\n}"
+            },
+            "url": {
+              "raw": "{{BASE_URL}}/api/compras",
+              "host": ["{{BASE_URL}}"],
+              "path": ["api", "compras"]
+            }
+          }
+        }
+      ]
+    }
+  ]
+} 
