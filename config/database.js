@@ -5,8 +5,20 @@ const dbConfig = {
   port: process.env.DB_PORT || 3306,
   user: process.env.DB_USER || 'root',
   password: process.env.DB_PASSWORD || 'Mazerunner12',
-  database: process.env.DB_NAME || 'tortillerialaherradurasolis'
+  database: process.env.DB_NAME || 'tortillerialaherradurasolis',
+  // Configuraciones adicionales para mejor estabilidad
+  acquireTimeout: 60000,
+  timeout: 60000,
+  reconnect: true,
+  charset: 'utf8mb4'
 };
+
+console.log('🔧 Configuración de base de datos:');
+console.log('Host:', dbConfig.host);
+console.log('Puerto:', dbConfig.port);
+console.log('Usuario:', dbConfig.user);
+console.log('Base de datos:', dbConfig.database);
+console.log('Contraseña:', dbConfig.password ? '***DEFINIDA***' : 'NO DEFINIDA');
 
 const pool = mysql.createPool({
   ...dbConfig,
@@ -17,12 +29,21 @@ const pool = mysql.createPool({
 
 async function testConnection() {
   try {
+    console.log('🔗 Intentando conectar a la base de datos...');
     const connection = await pool.getConnection();
     console.log('✅ Conexión a MySQL establecida correctamente');
+    
+    // Probar una consulta simple
+    const [rows] = await connection.execute('SELECT 1 as test');
+    console.log('✅ Consulta de prueba exitosa');
+    
     connection.release();
     return true;
   } catch (error) {
-    console.error('❌ Error al conectar con MySQL:', error.message);
+    console.error('❌ Error al conectar con MySQL:');
+    console.error('Mensaje:', error.message);
+    console.error('Código:', error.code);
+    console.error('SQL State:', error.sqlState);
     return false;
   }
 }

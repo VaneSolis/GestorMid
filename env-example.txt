@@ -1,0 +1,19 @@
+# 🗄️ VARIABLES DE ENTORNO PARA CLEVER CLOUD
+# Copia este archivo como .env y llena con tus datos reales
+
+# Base de datos Clever Cloud
+DB_HOST=mysql.clever-cloud.com
+DB_PORT=3306
+DB_USER=tu-usuario-clever-cloud
+DB_PASSWORD=tu-contraseña-clever-cloud
+DB_NAME=tu-nombre-de-base-de-datos
+
+# Configuración del servidor
+PORT=3000
+NODE_ENV=production
+
+# Ejemplo de datos reales (reemplaza con los tuyos):
+# DB_HOST=mysql-12345.clever-cloud.com
+# DB_USER=u123456789
+# DB_PASSWORD=abc123def456
+# DB_NAME=bd_gestor_tortilleria 

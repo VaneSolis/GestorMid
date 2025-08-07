@@ -1,37 +1,28 @@
 require('dotenv').config();
-const mysql = require('mysql2/promise');
+const { testConnection } = require('./config/database');
 
 async function testRenderConnection() {
+  console.log('🔍 Probando conexión desde Render...');
+  console.log('📋 Variables de entorno:');
+  console.log('DB_HOST:', process.env.DB_HOST || 'NO DEFINIDA');
+  console.log('DB_PORT:', process.env.DB_PORT || 'NO DEFINIDA');
+  console.log('DB_USER:', process.env.DB_USER || 'NO DEFINIDA');
+  console.log('DB_NAME:', process.env.DB_NAME || 'NO DEFINIDA');
+  console.log('DB_PASSWORD:', process.env.DB_PASSWORD ? '***DEFINIDA***' : 'NO DEFINIDA');
+  console.log('NODE_ENV:', process.env.NODE_ENV || 'NO DEFINIDA');
+  console.log('PORT:', process.env.PORT || 'NO DEFINIDA');
+  
+  console.log('\n🔗 Intentando conectar...');
+  
   try {
-    console.log('🔍 Verificando variables de entorno...');
-    console.log('DB_HOST:', process.env.DB_HOST);
-    console.log('DB_USER:', process.env.DB_USER);
-    console.log('DB_NAME:', process.env.DB_NAME);
-    console.log('DB_PORT:', process.env.DB_PORT);
-    console.log('NODE_ENV:', process.env.NODE_ENV);
-    
-    const dbConfig = {
-      host: process.env.DB_HOST,
-      user: process.env.DB_USER,
-      password: process.env.DB_PASSWORD,
-      database: process.env.DB_NAME,
-      port: process.env.DB_PORT || 3306
-    };
-    
-    console.log('🔌 Conectando a la base de datos...');
-    const connection = await mysql.createConnection(dbConfig);
-    console.log('✅ Conexión exitosa!');
-    
-    // Probar consulta
-    const [rows] = await connection.execute('SELECT COUNT(*) as total FROM clientes');
-    console.log('📊 Total de clientes:', rows[0].total);
-    
-    await connection.end();
-    console.log('🎉 Prueba completada exitosamente!');
-    
+    const isConnected = await testConnection();
+    if (isConnected) {
+      console.log('✅ Conexión exitosa!');
+    } else {
+      console.log('❌ Error de conexión');
+    }
   } catch (error) {
-    console.error('❌ Error de conexión:', error.message);
-    console.error('🔍 Detalles del error:', error);
+    console.error('💥 Error completo:', error);
   }
 }
 
