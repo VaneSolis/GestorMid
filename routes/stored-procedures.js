@@ -19,10 +19,10 @@ router.get('/clientes', async (req, res) => {
 // Insertar cliente
 router.post('/clientes', async (req, res) => {
   try {
-    const { nombre, telefono, email, direccion } = req.body;
-    const [result] = await pool.execute('CALL sp_insertar_cliente(?, ?, ?, ?)', 
-      [nombre, telefono, email, direccion]);
-    res.json({ success: true, message: 'Cliente agregado correctamente', id: result[0][0].id });
+    const { nombre, apellido, telefono, email, direccion } = req.body;
+    const [result] = await pool.execute('CALL sp_insertar_cliente(?, ?, ?, ?, ?)', 
+      [nombre, apellido, telefono, email, direccion]);
+    res.json({ success: true, message: 'Cliente agregado correctamente', data: result[0][0] });
   } catch (error) {
     res.status(500).json({ success: false, message: error.message });
   }
@@ -32,9 +32,9 @@ router.post('/clientes', async (req, res) => {
 router.put('/clientes/:id', async (req, res) => {
   try {
     const { id } = req.params;
-    const { nombre, telefono, email, direccion } = req.body;
-    await pool.execute('CALL sp_actualizar_cliente(?, ?, ?, ?, ?)', 
-      [id, nombre, telefono, email, direccion]);
+    const { nombre, apellido, telefono, email, direccion } = req.body;
+    await pool.execute('CALL sp_actualizar_cliente(?, ?, ?, ?, ?, ?)', 
+      [id, nombre, apellido, telefono, email, direccion]);
     res.json({ success: true, message: 'Cliente actualizado correctamente' });
   } catch (error) {
     res.status(500).json({ success: false, message: error.message });
@@ -84,10 +84,10 @@ router.get('/productos', async (req, res) => {
 // Insertar producto
 router.post('/productos', async (req, res) => {
   try {
-    const { nombre, precio, stock, unidad_medida, categoria } = req.body;
-    const [result] = await pool.execute('CALL sp_insertar_producto(?, ?, ?, ?, ?)', 
-      [nombre, precio, unidad_medida, categoria, stock]);
-    res.json({ success: true, message: 'Producto agregado correctamente', id: result[0][0].id });
+    const { nombre_producto, precio, stock, descripcion } = req.body;
+    const [result] = await pool.execute('CALL sp_insertar_producto(?, ?, ?, ?)', 
+      [nombre_producto, precio, stock, descripcion]);
+    res.json({ success: true, message: 'Producto agregado correctamente', data: result[0][0] });
   } catch (error) {
     res.status(500).json({ success: false, message: error.message });
   }
@@ -97,9 +97,9 @@ router.post('/productos', async (req, res) => {
 router.put('/productos/:id', async (req, res) => {
   try {
     const { id } = req.params;
-    const { nombre, precio, stock, unidad_medida, categoria } = req.body;
-    await pool.execute('CALL sp_actualizar_producto(?, ?, ?, ?, ?, ?)', 
-      [id, nombre, precio, unidad_medida, categoria, stock]);
+    const { nombre_producto, precio, stock, descripcion } = req.body;
+    await pool.execute('CALL sp_actualizar_producto(?, ?, ?, ?, ?)', 
+      [id, nombre_producto, precio, stock, descripcion]);
     res.json({ success: true, message: 'Producto actualizado correctamente' });
   } catch (error) {
     res.status(500).json({ success: false, message: error.message });
@@ -210,10 +210,10 @@ router.get('/empleados', async (req, res) => {
 // Insertar empleado
 router.post('/empleados', async (req, res) => {
   try {
-    const { nombre, puesto, fecha_contratacion, salario, estatus } = req.body;
-    const [result] = await pool.execute('CALL sp_insertar_empleado(?, ?, ?, ?, ?)', 
-      [nombre, puesto, fecha_contratacion, salario, estatus]);
-    res.json({ success: true, message: 'Empleado agregado correctamente', id: result[0][0].id });
+    const { nombre, puesto, salario } = req.body;
+    const [result] = await pool.execute('CALL sp_insertar_empleado(?, ?, ?)', 
+      [nombre, puesto, salario]);
+    res.json({ success: true, message: 'Empleado agregado correctamente', data: result[0][0] });
   } catch (error) {
     res.status(500).json({ success: false, message: error.message });
   }
@@ -223,10 +223,10 @@ router.post('/empleados', async (req, res) => {
 router.put('/empleados/:id', async (req, res) => {
   try {
     const { id } = req.params;
-    const { nombre, puesto, fecha_contratacion, salario, estatus } = req.body;
+    const { nombre, puesto, salario } = req.body;
     
-    await pool.execute('CALL sp_actualizar_empleado(?, ?, ?, ?, ?, ?)', 
-      [id, nombre, puesto, fecha_contratacion, salario, estatus]);
+    await pool.execute('CALL sp_actualizar_empleado(?, ?, ?, ?)', 
+      [id, nombre, puesto, salario]);
     
     res.json({ success: true, message: 'Empleado actualizado correctamente' });
   } catch (error) {
@@ -262,10 +262,10 @@ router.get('/proveedores', async (req, res) => {
 // Insertar proveedor
 router.post('/proveedores', async (req, res) => {
   try {
-    const { nombre, telefono, producto_suministrado, frecuencia_entrega } = req.body;
+    const { nombre, contacto, telefono, direccion } = req.body;
     const [result] = await pool.execute('CALL sp_insertar_proveedor(?, ?, ?, ?)', 
-      [nombre, telefono, producto_suministrado, frecuencia_entrega]);
-    res.json({ success: true, message: 'Proveedor agregado correctamente', id: result[0][0].id });
+      [nombre, contacto, telefono, direccion]);
+    res.json({ success: true, message: 'Proveedor agregado correctamente', data: result[0][0] });
   } catch (error) {
     res.status(500).json({ success: false, message: error.message });
   }
@@ -275,9 +275,9 @@ router.post('/proveedores', async (req, res) => {
 router.put('/proveedores/:id', async (req, res) => {
   try {
     const { id } = req.params;
-    const { nombre, telefono, producto_suministrado, frecuencia_entrega } = req.body;
+    const { nombre, contacto, telefono, direccion } = req.body;
     await pool.execute('CALL sp_actualizar_proveedor(?, ?, ?, ?, ?)', 
-      [id, nombre, telefono, producto_suministrado, frecuencia_entrega]);
+      [id, nombre, contacto, telefono, direccion]);
     res.json({ success: true, message: 'Proveedor actualizado correctamente' });
   } catch (error) {
     res.status(500).json({ success: false, message: error.message });

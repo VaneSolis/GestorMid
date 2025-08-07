@@ -1321,7 +1321,7 @@ async function saveProducto() {
     const formData = new FormData(form);
     
     const data = {
-        nombre: formData.get('nombre'),
+        nombre_producto: formData.get('nombre'),
         precio: parseFloat(formData.get('precio')),
         stock: parseInt(formData.get('stock')),
         descripcion: formData.get('descripcion') || ''
