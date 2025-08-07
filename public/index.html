@@ -8,20 +8,21 @@
     <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" rel="stylesheet">
     <style>
         :root {
-            --primary-color: #2c3e50;
-            --secondary-color: #e74c3c;
-            --accent-color: #f39c12;
+            --primary-color: #ffc107; /* Amarillo */
+            --secondary-color: #28a745; /* Verde */
+            --accent-color: #ffeb3b; /* Amarillo claro */
+            --dark-green: #1e7e34; /* Verde oscuro */
         }
         
         body {
-            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            background: linear-gradient(135deg, var(--primary-color) 0%, var(--secondary-color) 100%);
             min-height: 100vh;
             font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
         }
         
         .navbar-brand {
             font-weight: bold;
-            color: var(--primary-color) !important;
+            color: var(--dark-green) !important;
         }
         
         .card {
@@ -29,6 +30,7 @@
             border-radius: 15px;
             box-shadow: 0 10px 30px rgba(0,0,0,0.1);
             transition: transform 0.3s ease;
+            background: rgba(255, 255, 255, 0.95);
         }
         
         .card:hover {
@@ -36,21 +38,31 @@
         }
         
         .btn-primary {
-            background: var(--primary-color);
-            border: none;
-            border-radius: 25px;
-            padding: 10px 25px;
-        }
-        
-        .btn-secondary {
             background: var(--secondary-color);
             border: none;
             border-radius: 25px;
             padding: 10px 25px;
         }
         
+        .btn-primary:hover {
+            background: var(--dark-green);
+        }
+        
+        .btn-secondary {
+            background: var(--primary-color);
+            border: none;
+            border-radius: 25px;
+            padding: 10px 25px;
+            color: #333;
+        }
+        
+        .btn-secondary:hover {
+            background: var(--accent-color);
+            color: #333;
+        }
+        
         .status-card {
-            background: linear-gradient(45deg, #667eea, #764ba2);
+            background: linear-gradient(45deg, var(--secondary-color), var(--dark-green));
             color: white;
         }
         
@@ -67,6 +79,46 @@
             font-size: 3rem;
             margin-bottom: 1rem;
         }
+        
+        .text-primary {
+            color: var(--secondary-color) !important;
+        }
+        
+        .text-success {
+            color: var(--secondary-color) !important;
+        }
+        
+        .text-warning {
+            color: var(--primary-color) !important;
+        }
+        
+        .text-info {
+            color: var(--dark-green) !important;
+        }
+        
+        .text-secondary {
+            color: var(--primary-color) !important;
+        }
+        
+        .text-danger {
+            color: var(--dark-green) !important;
+        }
+        
+        .text-dark {
+            color: var(--dark-green) !important;
+        }
+        
+        .text-muted {
+            color: var(--secondary-color) !important;
+        }
+        
+        .navbar {
+            background: rgba(255, 255, 255, 0.95) !important;
+        }
+        
+        .text-white {
+            color: var(--dark-green) !important;
+        }
     </style>
 </head>
 <body>
@@ -74,7 +126,7 @@
     <nav class="navbar navbar-expand-lg navbar-light bg-white shadow-sm">
         <div class="container">
             <a class="navbar-brand" href="#">
-                <i class="fas fa-bread-slice me-2"></i>
+                <i class="fas fa-horseshoe me-2"></i>
                 Tortillería La Herradura
             </a>
             <div class="navbar-nav ms-auto">

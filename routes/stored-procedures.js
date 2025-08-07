@@ -84,9 +84,9 @@ router.get('/productos', async (req, res) => {
 // Insertar producto
 router.post('/productos', async (req, res) => {
   try {
-    const { nombre, precio, stock, descripcion } = req.body;
-    const [result] = await pool.execute('CALL sp_insertar_producto(?, ?, ?, ?)', 
-      [nombre, precio, stock, descripcion]);
+    const { nombre, precio, stock, unidad_medida, categoria } = req.body;
+    const [result] = await pool.execute('CALL sp_insertar_producto(?, ?, ?, ?, ?)', 
+      [nombre, precio, unidad_medida, categoria, stock]);
     res.json({ success: true, message: 'Producto agregado correctamente', id: result[0][0].id });
   } catch (error) {
     res.status(500).json({ success: false, message: error.message });
@@ -97,9 +97,9 @@ router.post('/productos', async (req, res) => {
 router.put('/productos/:id', async (req, res) => {
   try {
     const { id } = req.params;
-    const { nombre, precio, stock, descripcion } = req.body;
-    await pool.execute('CALL sp_actualizar_producto(?, ?, ?, ?, ?)', 
-      [id, nombre, precio, stock, descripcion]);
+    const { nombre, precio, stock, unidad_medida, categoria } = req.body;
+    await pool.execute('CALL sp_actualizar_producto(?, ?, ?, ?, ?, ?)', 
+      [id, nombre, precio, unidad_medida, categoria, stock]);
     res.json({ success: true, message: 'Producto actualizado correctamente' });
   } catch (error) {
     res.status(500).json({ success: false, message: error.message });
@@ -186,6 +186,17 @@ router.get('/ventas/:id', async (req, res) => {
 // PROCEDIMIENTOS ALMACENADOS - EMPLEADOS
 // ========================================
 
+// Obtener empleado por ID (debe ir antes que /empleados)
+router.get('/empleados/:id', async (req, res) => {
+  try {
+    const { id } = req.params;
+    const [rows] = await pool.execute('CALL sp_obtener_empleado(?)', [id]);
+    res.json({ success: true, data: rows[0] });
+  } catch (error) {
+    res.status(500).json({ success: false, message: error.message });
+  }
+});
+
 // Mostrar todos los empleados
 router.get('/empleados', async (req, res) => {
   try {
@@ -213,8 +224,10 @@ router.put('/empleados/:id', async (req, res) => {
   try {
     const { id } = req.params;
     const { nombre, puesto, fecha_contratacion, salario, estatus } = req.body;
+    
     await pool.execute('CALL sp_actualizar_empleado(?, ?, ?, ?, ?, ?)', 
       [id, nombre, puesto, fecha_contratacion, salario, estatus]);
+    
     res.json({ success: true, message: 'Empleado actualizado correctamente' });
   } catch (error) {
     res.status(500).json({ success: false, message: error.message });
@@ -249,9 +262,9 @@ router.get('/proveedores', async (req, res) => {
 // Insertar proveedor
 router.post('/proveedores', async (req, res) => {
   try {
-    const { nombre, contacto, telefono, email, direccion } = req.body;
-    const [result] = await pool.execute('CALL sp_insertar_proveedor(?, ?, ?, ?, ?)', 
-      [nombre, contacto, telefono, email, direccion]);
+    const { nombre, telefono, producto_suministrado, frecuencia_entrega } = req.body;
+    const [result] = await pool.execute('CALL sp_insertar_proveedor(?, ?, ?, ?)', 
+      [nombre, telefono, producto_suministrado, frecuencia_entrega]);
     res.json({ success: true, message: 'Proveedor agregado correctamente', id: result[0][0].id });
   } catch (error) {
     res.status(500).json({ success: false, message: error.message });
@@ -262,9 +275,9 @@ router.post('/proveedores', async (req, res) => {
 router.put('/proveedores/:id', async (req, res) => {
   try {
     const { id } = req.params;
-    const { nombre, contacto, telefono, email, direccion } = req.body;
-    await pool.execute('CALL sp_actualizar_proveedor(?, ?, ?, ?, ?, ?)', 
-      [id, nombre, contacto, telefono, email, direccion]);
+    const { nombre, telefono, producto_suministrado, frecuencia_entrega } = req.body;
+    await pool.execute('CALL sp_actualizar_proveedor(?, ?, ?, ?, ?)', 
+      [id, nombre, telefono, producto_suministrado, frecuencia_entrega]);
     res.json({ success: true, message: 'Proveedor actualizado correctamente' });
   } catch (error) {
     res.status(500).json({ success: false, message: error.message });

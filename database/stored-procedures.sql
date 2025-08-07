@@ -236,7 +236,8 @@ DELIMITER ;
 DELIMITER //
 CREATE PROCEDURE sp_mostrar_proveedores()
 BEGIN
-    SELECT * FROM proveedores ORDER BY nombre;
+    SELECT id_proveedor as id, nombre, telefono, producto_suministrado, frecuencia_entrega 
+    FROM proveedores ORDER BY nombre;
 END //
 DELIMITER ;
 
@@ -244,14 +245,13 @@ DELIMITER ;
 DELIMITER //
 CREATE PROCEDURE sp_insertar_proveedor(
     IN p_nombre VARCHAR(100),
-    IN p_contacto VARCHAR(100),
     IN p_telefono VARCHAR(20),
-    IN p_email VARCHAR(100),
-    IN p_direccion TEXT
+    IN p_producto_suministrado VARCHAR(100),
+    IN p_frecuencia_entrega VARCHAR(50)
 )
 BEGIN
-    INSERT INTO proveedores (nombre, contacto, telefono, email, direccion) 
-    VALUES (p_nombre, p_contacto, p_telefono, p_email, p_direccion);
+    INSERT INTO proveedores (nombre, telefono, producto_suministrado, frecuencia_entrega) 
+    VALUES (p_nombre, p_telefono, p_producto_suministrado, p_frecuencia_entrega);
     SELECT LAST_INSERT_ID() as id;
 END //
 DELIMITER ;
@@ -261,15 +261,14 @@ DELIMITER //
 CREATE PROCEDURE sp_actualizar_proveedor(
     IN p_id INT,
     IN p_nombre VARCHAR(100),
-    IN p_contacto VARCHAR(100),
     IN p_telefono VARCHAR(20),
-    IN p_email VARCHAR(100),
-    IN p_direccion TEXT
+    IN p_producto_suministrado VARCHAR(100),
+    IN p_frecuencia_entrega VARCHAR(50)
 )
 BEGIN
     UPDATE proveedores 
-    SET nombre = p_nombre, contacto = p_contacto, telefono = p_telefono, email = p_email, direccion = p_direccion
-    WHERE id = p_id;
+    SET nombre = p_nombre, telefono = p_telefono, producto_suministrado = p_producto_suministrado, frecuencia_entrega = p_frecuencia_entrega
+    WHERE id_proveedor = p_id;
 END //
 DELIMITER ;
 
@@ -277,7 +276,7 @@ DELIMITER ;
 DELIMITER //
 CREATE PROCEDURE sp_eliminar_proveedor(IN p_id INT)
 BEGIN
-    DELETE FROM proveedores WHERE id = p_id;
+    DELETE FROM proveedores WHERE id_proveedor = p_id;
 END //
 DELIMITER ;
 
