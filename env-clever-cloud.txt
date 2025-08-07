@@ -1,0 +1,10 @@
+# Variables de Clever Cloud MySQL Add-on
+MYSQL_ADDON_HOST=bmbomdrvxfmjayg1ob1t-mysql.services.clever-cloud.com
+MYSQL_ADDON_USER=u38jfxey6ydxpquj
+MYSQL_ADDON_PASSWORD=G6OrgeuvwYB5CgquynZQ
+MYSQL_ADDON_DB=bmbomdrvxfmjayg1ob1t
+MYSQL_ADDON_PORT=3306
+
+# Configuración del servidor
+NODE_ENV=production
+PORT=8080 
