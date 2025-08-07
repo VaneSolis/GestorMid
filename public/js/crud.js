@@ -40,15 +40,15 @@ function displayClientes(clientes) {
   
   tbody.innerHTML = clientes.map(cliente => `
     <tr>
-      <td>${cliente.id}</td>
-      <td>${cliente.nombre}</td>
+      <td>${cliente.id_cliente}</td>
+      <td>${cliente.nombre} ${cliente.apellido || ''}</td>
       <td>${cliente.telefono || '-'}</td>
       <td>${cliente.email || '-'}</td>
       <td>
-        <button class="btn btn-sm btn-primary" onclick="editCliente(${cliente.id})">
+        <button class="btn btn-sm btn-primary" onclick="editCliente(${cliente.id_cliente})">
           <i class="fas fa-edit"></i>
         </button>
-        <button class="btn btn-sm btn-danger" onclick="deleteCliente(${cliente.id})">
+        <button class="btn btn-sm btn-danger" onclick="deleteCliente(${cliente.id_cliente})">
           <i class="fas fa-trash"></i>
         </button>
       </td>
@@ -66,6 +66,7 @@ async function insertCliente(formData) {
       },
       body: JSON.stringify({
         nombre: formData.nombre,
+        apellido: formData.apellido,
         telefono: formData.telefono,
         email: formData.email,
         direccion: formData.direccion
@@ -98,6 +99,7 @@ async function updateCliente(id, formData) {
       },
       body: JSON.stringify({
         nombre: formData.nombre,
+        apellido: formData.apellido,
         telefono: formData.telefono,
         email: formData.email,
         direccion: formData.direccion
@@ -181,7 +183,7 @@ async function loadProductos() {
       if (productoSelect) {
         productoSelect.innerHTML = '<option value="">Seleccionar producto</option>' +
           data.data.map(producto => 
-            `<option value="${producto.id}">${producto.nombre}</option>`
+            `<option value="${producto.id_producto}">${producto.nombre_producto}</option>`
           ).join('');
       }
     } else {
@@ -203,17 +205,17 @@ function displayProductos(productos) {
   
   tbody.innerHTML = productos.map(producto => `
     <tr>
-      <td>${producto.id}</td>
-      <td>${producto.nombre}</td>
-      <td>$${producto.precio}</td>
+      <td>${producto.id_producto}</td>
+      <td>${producto.nombre_producto}</td>
+      <td>$${producto.precio_unitario || producto.precio}</td>
       <td>${producto.stock || '0'} ${producto.unidad_medida || ''}</td>
       <td>${producto.unidad_medida || '-'}</td>
       <td>${producto.categoria || '-'}</td>
       <td>
-        <button class="btn btn-sm btn-primary" onclick="editProducto(${producto.id})">
+        <button class="btn btn-sm btn-primary" onclick="editProducto(${producto.id_producto})">
           <i class="fas fa-edit"></i>
         </button>
-        <button class="btn btn-sm btn-danger" onclick="deleteProducto(${producto.id})">
+        <button class="btn btn-sm btn-danger" onclick="deleteProducto(${producto.id_producto})">
           <i class="fas fa-trash"></i>
         </button>
       </td>
@@ -233,8 +235,7 @@ async function insertProducto(formData) {
         nombre: formData.nombre,
         precio: formData.precio,
         stock: formData.stock,
-        unidad_medida: formData.unidad_medida,
-        categoria: formData.categoria
+        descripcion: formData.descripcion
       })
     });
     
@@ -266,8 +267,7 @@ async function updateProducto(id, formData) {
         nombre: formData.nombre,
         precio: formData.precio,
         stock: formData.stock,
-        unidad_medida: formData.unidad_medida,
-        categoria: formData.categoria
+        descripcion: formData.descripcion
       })
     });
     
@@ -317,18 +317,10 @@ async function deleteProducto(id) {
 
 // Editar producto
 async function editProducto(id) {
-  try {
-    const response = await fetch(`/api/productos/${id}`);
-    const data = await response.json();
-    
-    if (data.success && data.data) {
-      const producto = data.data;
-      showProductEditForm(producto);
-    } else {
-      showAlert('Error al obtener datos del producto', 'danger');
-    }
-  } catch (error) {
-    showAlert('Error de conexión: ' + error.message, 'danger');
+  const producto = allProductos.find(p => p.id_producto === id);
+  if (producto) {
+    // Aquí puedes implementar la lógica para mostrar el formulario de edición
+    console.log('Editando producto:', producto);
   }
 }
 
@@ -364,14 +356,14 @@ function displayVentas(ventas) {
   
   tbody.innerHTML = ventas.map(venta => `
     <tr>
-      <td>${venta.id}</td>
+      <td>${venta.id_venta}</td>
       <td>${venta.cliente_nombre || 'Cliente no registrado'}</td>
       <td>${venta.empleado_nombre || 'Empleado no asignado'}</td>
       <td>${venta.productos || 'Sin productos'}</td>
       <td>$${venta.total}</td>
-      <td>${new Date(venta.fecha).toLocaleDateString()}</td>
+      <td>${new Date(venta.fecha_venta).toLocaleDateString()}</td>
       <td>
-        <button class="btn btn-sm btn-info" onclick="viewVenta(${venta.id})">
+        <button class="btn btn-sm btn-info" onclick="viewVenta(${venta.id_venta})">
           <i class="fas fa-eye"></i>
         </button>
       </td>
@@ -405,13 +397,13 @@ function displayEmpleados(empleados) {
   const tbody = document.getElementById('empleadosTable');
   
   if (empleados.length === 0) {
-    tbody.innerHTML = '<tr><td colspan="6" class="text-center">No hay empleados registrados</td></tr>';
+    tbody.innerHTML = '<tr><td colspan="7" class="text-center">No hay empleados registrados</td></tr>';
     return;
   }
   
   tbody.innerHTML = empleados.map(empleado => `
     <tr>
-      <td>${empleado.id}</td>
+      <td>${empleado.id_empleado}</td>
       <td>${empleado.nombre}</td>
       <td>${empleado.puesto}</td>
       <td>${empleado.fecha_contratacion ? new Date(empleado.fecha_contratacion).toLocaleDateString() : '-'}</td>
@@ -422,10 +414,10 @@ function displayEmpleados(empleados) {
         </span>
       </td>
       <td>
-        <button class="btn btn-sm btn-primary" onclick="editEmpleado(${empleado.id})">
+        <button class="btn btn-sm btn-primary" onclick="editEmpleado(${empleado.id_empleado})">
           <i class="fas fa-edit"></i>
         </button>
-        <button class="btn btn-sm btn-danger" onclick="deleteEmpleado(${empleado.id})">
+        <button class="btn btn-sm btn-danger" onclick="deleteEmpleado(${empleado.id_empleado})">
           <i class="fas fa-trash"></i>
         </button>
       </td>
@@ -433,24 +425,12 @@ function displayEmpleados(empleados) {
   `).join('');
 }
 
-// ========================================
-// FUNCIONES DE EDICIÓN - EMPLEADOS
-// ========================================
-
 // Editar empleado
 async function editEmpleado(id) {
-  try {
-    const response = await fetch(`/api/empleados/${id}`);
-    const data = await response.json();
-    
-    if (data.success && data.data.length > 0) {
-      const empleado = data.data[0];
-      showEmpleadoEditForm(empleado);
-    } else {
-      showAlert('Error al obtener datos del empleado', 'danger');
-    }
-  } catch (error) {
-    showAlert('Error de conexión: ' + error.message, 'danger');
+  const empleado = allEmpleados.find(e => e.id_empleado === id);
+  if (empleado) {
+    // Aquí puedes implementar la lógica para mostrar el formulario de edición
+    console.log('Editando empleado:', empleado);
   }
 }
 
@@ -462,7 +442,11 @@ async function updateEmpleado(id, formData) {
       headers: {
         'Content-Type': 'application/json'
       },
-      body: JSON.stringify(formData)
+      body: JSON.stringify({
+        nombre: formData.nombre,
+        puesto: formData.puesto,
+        salario: formData.salario
+      })
     });
     
     const data = await response.json();
@@ -470,34 +454,38 @@ async function updateEmpleado(id, formData) {
     if (data.success) {
       showAlert('Empleado actualizado correctamente', 'success');
       loadEmpleados();
-      hideEmpleadoForm();
+      return true;
     } else {
       showAlert('Error al actualizar empleado: ' + data.message, 'danger');
+      return false;
     }
   } catch (error) {
     showAlert('Error de conexión: ' + error.message, 'danger');
+    return false;
   }
 }
 
 // Eliminar empleado
 async function deleteEmpleado(id) {
-  if (confirm('¿Estás seguro de que quieres eliminar este empleado?')) {
-    try {
-      const response = await fetch(`/api/empleados/${id}`, {
-        method: 'DELETE'
-      });
-      
-      const data = await response.json();
-      
-      if (data.success) {
-        showAlert('Empleado eliminado correctamente', 'success');
-        loadEmpleados();
-      } else {
-        showAlert('Error al eliminar empleado: ' + data.message, 'danger');
-      }
-    } catch (error) {
-      showAlert('Error de conexión: ' + error.message, 'danger');
+  if (!confirm('¿Estás seguro de que quieres eliminar este empleado?')) {
+    return;
+  }
+  
+  try {
+    const response = await fetch(`/api/empleados/${id}`, {
+      method: 'DELETE'
+    });
+    
+    const data = await response.json();
+    
+    if (data.success) {
+      showAlert('Empleado eliminado correctamente', 'success');
+      loadEmpleados();
+    } else {
+      showAlert('Error al eliminar empleado: ' + data.message, 'danger');
     }
+  } catch (error) {
+    showAlert('Error de conexión: ' + error.message, 'danger');
   }
 }
 
@@ -535,16 +523,16 @@ function displayProveedores(proveedores) {
   
   tbody.innerHTML = proveedores.map(proveedor => `
     <tr>
-      <td>${proveedor.id}</td>
+      <td>${proveedor.id_proveedor}</td>
       <td>${proveedor.nombre}</td>
       <td>${proveedor.producto_suministrado || '-'}</td>
       <td>${proveedor.telefono || '-'}</td>
       <td>${proveedor.frecuencia_entrega || '-'}</td>
       <td>
-        <button class="btn btn-sm btn-primary" onclick="editProveedor(${proveedor.id})">
+        <button class="btn btn-sm btn-primary" onclick="editProveedor(${proveedor.id_proveedor})">
           <i class="fas fa-edit"></i>
         </button>
-        <button class="btn btn-sm btn-danger" onclick="deleteProveedor(${proveedor.id})">
+        <button class="btn btn-sm btn-danger" onclick="deleteProveedor(${proveedor.id_proveedor})">
           <i class="fas fa-trash"></i>
         </button>
       </td>
@@ -584,13 +572,13 @@ function displayCompras(compras) {
   
   tbody.innerHTML = compras.map(compra => `
     <tr>
-      <td>${compra.id}</td>
+      <td>${compra.id_compra}</td>
       <td>${compra.proveedor_nombre || 'Proveedor no registrado'}</td>
       <td>${compra.productos || 'Sin productos'}</td>
-      <td>$${compra.total}</td>
-      <td>${new Date(compra.fecha).toLocaleDateString()}</td>
+      <td>$${compra.costo_total}</td>
+      <td>${new Date(compra.fecha_compra).toLocaleDateString()}</td>
       <td>
-        <button class="btn btn-sm btn-info" onclick="viewCompra(${compra.id})">
+        <button class="btn btn-sm btn-info" onclick="viewCompra(${compra.id_compra})">
           <i class="fas fa-eye"></i>
         </button>
       </td>
@@ -602,7 +590,7 @@ function displayCompras(compras) {
 // FUNCIONES UTILITARIAS
 // ========================================
 
-// Mostrar alerta
+// Mostrar alertas
 function showAlert(message, type = 'info') {
   const alertDiv = document.createElement('div');
   alertDiv.className = `alert alert-${type} alert-dismissible fade show`;
@@ -611,11 +599,10 @@ function showAlert(message, type = 'info') {
     <button type="button" class="btn-close" data-bs-dismiss="alert"></button>
   `;
   
-  // Insertar al inicio del contenedor principal
   const container = document.querySelector('.container');
   container.insertBefore(alertDiv, container.firstChild);
   
-  // Auto-dismiss después de 5 segundos
+  // Auto-remover después de 5 segundos
   setTimeout(() => {
     if (alertDiv.parentNode) {
       alertDiv.remove();
@@ -623,9 +610,9 @@ function showAlert(message, type = 'info') {
   }, 5000);
 }
 
-// Cargar datos cuando se cambia de módulo
+// Cargar datos del módulo
 function loadModuleData(moduleName) {
-  switch(moduleName) {
+  switch (moduleName) {
     case 'clientes':
       loadClientes();
       break;
@@ -651,135 +638,111 @@ function loadModuleData(moduleName) {
 // FUNCIONES DE BÚSQUEDA
 // ========================================
 
-// Búsqueda de clientes
+// Buscar clientes
 function searchClientes() {
   const searchTerm = document.getElementById('searchCliente').value.toLowerCase();
-  const filteredClientes = allClientes.filter(cliente => {
-    const id = (cliente.id || '').toString().toLowerCase();
-    const nombre = (cliente.nombre || '').toString().toLowerCase();
-    
-    return id.includes(searchTerm) ||
-           nombre.includes(searchTerm);
-  });
+  const filteredClientes = allClientes.filter(cliente => 
+    cliente.nombre.toLowerCase().includes(searchTerm) ||
+    cliente.apellido?.toLowerCase().includes(searchTerm) ||
+    cliente.telefono?.includes(searchTerm)
+  );
   displayClientes(filteredClientes);
 }
 
-// Búsqueda de productos
+// Buscar productos
 function searchProductos() {
   const searchTerm = document.getElementById('searchProducto').value.toLowerCase();
-  const filteredProductos = allProductos.filter(producto => {
-    const nombre = (producto.nombre || '').toString().toLowerCase();
-    const categoria = (producto.categoria || '').toString().toLowerCase();
-    const unidad_medida = (producto.unidad_medida || '').toString().toLowerCase();
-    const stock = (producto.stock || '').toString().toLowerCase();
-    
-    return nombre.includes(searchTerm) ||
-           categoria.includes(searchTerm) ||
-           unidad_medida.includes(searchTerm) ||
-           stock.includes(searchTerm);
-  });
+  const filteredProductos = allProductos.filter(producto => 
+    producto.nombre_producto.toLowerCase().includes(searchTerm) ||
+    producto.categoria?.toLowerCase().includes(searchTerm)
+  );
   displayProductos(filteredProductos);
 }
 
-// Búsqueda de ventas
+// Buscar ventas
 function searchVentas() {
   const searchTerm = document.getElementById('searchVenta').value.toLowerCase();
-  const filteredVentas = allVentas.filter(venta => {
-    const id = (venta.id || '').toString().toLowerCase();
-    const cliente_nombre = (venta.cliente_nombre || '').toString().toLowerCase();
-    const empleado_nombre = (venta.empleado_nombre || '').toString().toLowerCase();
-    const productos = (venta.productos || '').toString().toLowerCase();
-    const total = (venta.total || '').toString().toLowerCase();
-    
-    return id.includes(searchTerm) ||
-           cliente_nombre.includes(searchTerm) ||
-           empleado_nombre.includes(searchTerm) ||
-           productos.includes(searchTerm) ||
-           total.includes(searchTerm);
-  });
+  const filteredVentas = allVentas.filter(venta => 
+    venta.cliente_nombre?.toLowerCase().includes(searchTerm) ||
+    venta.total?.toString().includes(searchTerm)
+  );
   displayVentas(filteredVentas);
 }
 
-// Búsqueda de empleados
+// Buscar empleados
 function searchEmpleados() {
   const searchTerm = document.getElementById('searchEmpleado').value.toLowerCase();
-  const filteredEmpleados = allEmpleados.filter(empleado => {
-    const id = (empleado.id || '').toString().toLowerCase();
-    const nombre = (empleado.nombre || '').toString().toLowerCase();
-    
-    return id.includes(searchTerm) ||
-           nombre.includes(searchTerm);
-  });
+  const filteredEmpleados = allEmpleados.filter(empleado => 
+    empleado.nombre.toLowerCase().includes(searchTerm) ||
+    empleado.puesto.toLowerCase().includes(searchTerm)
+  );
   displayEmpleados(filteredEmpleados);
 }
 
-// Búsqueda de proveedores
+// Buscar proveedores
 function searchProveedores() {
   const searchTerm = document.getElementById('searchProveedor').value.toLowerCase();
-  const filteredProveedores = allProveedores.filter(proveedor => {
-    const id = (proveedor.id || '').toString().toLowerCase();
-    const nombre = (proveedor.nombre || '').toString().toLowerCase();
-    const producto_suministrado = (proveedor.producto_suministrado || '').toString().toLowerCase();
-    
-    return id.includes(searchTerm) ||
-           nombre.includes(searchTerm) ||
-           producto_suministrado.includes(searchTerm);
-  });
+  const filteredProveedores = allProveedores.filter(proveedor => 
+    proveedor.nombre.toLowerCase().includes(searchTerm) ||
+    proveedor.producto_suministrado?.toLowerCase().includes(searchTerm)
+  );
   displayProveedores(filteredProveedores);
 }
 
-// Búsqueda de compras
+// Buscar compras
 function searchCompras() {
   const searchTerm = document.getElementById('searchCompra').value.toLowerCase();
-  const filteredCompras = allCompras.filter(compra => {
-    const id = (compra.id || '').toString().toLowerCase();
-    const proveedor_nombre = (compra.proveedor_nombre || '').toString().toLowerCase();
-    const productos = (compra.productos || '').toString().toLowerCase();
-    const total = (compra.total || '').toString().toLowerCase();
-    
-    return id.includes(searchTerm) ||
-           proveedor_nombre.includes(searchTerm) ||
-           productos.includes(searchTerm) ||
-           total.includes(searchTerm);
-  });
+  const filteredCompras = allCompras.filter(compra => 
+    compra.proveedor_nombre?.toLowerCase().includes(searchTerm) ||
+    compra.costo_total?.toString().includes(searchTerm)
+  );
   displayCompras(filteredCompras);
 }
 
-// Inicializar buscadores
+// ========================================
+// INICIALIZACIÓN
+// ========================================
+
+// Inicializar listeners de búsqueda
 function initializeSearchListeners() {
-  // Buscador de clientes
+  // Clientes
   const searchCliente = document.getElementById('searchCliente');
   if (searchCliente) {
     searchCliente.addEventListener('input', searchClientes);
   }
   
-  // Buscador de productos
+  // Productos
   const searchProducto = document.getElementById('searchProducto');
   if (searchProducto) {
     searchProducto.addEventListener('input', searchProductos);
   }
   
-  // Buscador de ventas
+  // Ventas
   const searchVenta = document.getElementById('searchVenta');
   if (searchVenta) {
     searchVenta.addEventListener('input', searchVentas);
   }
   
-  // Buscador de empleados
+  // Empleados
   const searchEmpleado = document.getElementById('searchEmpleado');
   if (searchEmpleado) {
     searchEmpleado.addEventListener('input', searchEmpleados);
   }
   
-  // Buscador de proveedores
+  // Proveedores
   const searchProveedor = document.getElementById('searchProveedor');
   if (searchProveedor) {
     searchProveedor.addEventListener('input', searchProveedores);
   }
   
-  // Buscador de compras
+  // Compras
   const searchCompra = document.getElementById('searchCompra');
   if (searchCompra) {
     searchCompra.addEventListener('input', searchCompras);
   }
-} 
+}
+
+// Inicializar cuando el DOM esté listo
+document.addEventListener('DOMContentLoaded', function() {
+  initializeSearchListeners();
+}); 
