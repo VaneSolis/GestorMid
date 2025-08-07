@@ -689,6 +689,10 @@ function showClientForm() {
                                 <input type="text" class="form-control" name="nombre" required>
                             </div>
                             <div class="mb-3">
+                                <label class="form-label">Apellido</label>
+                                <input type="text" class="form-control" name="apellido">
+                            </div>
+                            <div class="mb-3">
                                 <label class="form-label">Teléfono</label>
                                 <input type="tel" class="form-control" name="telefono">
                             </div>
@@ -711,18 +715,19 @@ function showClientForm() {
         </div>
     `;
     
-    // Remover modal existente si hay uno
+    // Remover modal anterior si existe
     const existingModal = document.getElementById('clienteModal');
     if (existingModal) {
         existingModal.remove();
     }
     
-    // Agregar modal al body
+    // Agregar nuevo modal
     document.body.insertAdjacentHTML('beforeend', modal);
     
     // Mostrar modal
-    const modalElement = new bootstrap.Modal(document.getElementById('clienteModal'));
-    modalElement.show();
+    const modalElement = document.getElementById('clienteModal');
+    const bsModal = new bootstrap.Modal(modalElement);
+    bsModal.show();
 }
 
 function showProductForm() {
@@ -746,15 +751,11 @@ function showProductForm() {
                             </div>
                             <div class="mb-3">
                                 <label class="form-label">Stock *</label>
-                                <input type="number" class="form-control" name="stock" step="0.01" required>
+                                <input type="number" class="form-control" name="stock" required>
                             </div>
                             <div class="mb-3">
-                                <label class="form-label">Unidad de Medida *</label>
-                                <input type="text" class="form-control" name="unidad_medida" placeholder="ej: kg, litro, bolsa" required>
-                            </div>
-                            <div class="mb-3">
-                                <label class="form-label">Categoría *</label>
-                                <input type="text" class="form-control" name="categoria" placeholder="ej: Tortillas, Bebidas, Botanas" required>
+                                <label class="form-label">Descripción</label>
+                                <textarea class="form-control" name="descripcion" rows="3"></textarea>
                             </div>
                         </form>
                     </div>
@@ -767,18 +768,19 @@ function showProductForm() {
         </div>
     `;
     
-    // Remover modal existente si hay uno
+    // Remover modal anterior si existe
     const existingModal = document.getElementById('productoModal');
     if (existingModal) {
         existingModal.remove();
     }
     
-    // Agregar modal al body
+    // Agregar nuevo modal
     document.body.insertAdjacentHTML('beforeend', modal);
     
     // Mostrar modal
-    const modalElement = new bootstrap.Modal(document.getElementById('productoModal'));
-    modalElement.show();
+    const modalElement = document.getElementById('productoModal');
+    const bsModal = new bootstrap.Modal(modalElement);
+    bsModal.show();
 }
 
 function showProductEditForm(producto) {
@@ -824,18 +826,19 @@ function showProductEditForm(producto) {
         </div>
     `;
     
-    // Remover modal existente si hay uno
+    // Remover modal anterior si existe
     const existingModal = document.getElementById('productoModal');
     if (existingModal) {
         existingModal.remove();
     }
     
-    // Agregar modal al body
+    // Agregar nuevo modal
     document.body.insertAdjacentHTML('beforeend', modal);
     
     // Mostrar modal
-    const modalElement = new bootstrap.Modal(document.getElementById('productoModal'));
-    modalElement.show();
+    const modalElement = document.getElementById('productoModal');
+    const bsModal = new bootstrap.Modal(modalElement);
+    bsModal.show();
 }
 
 function showVentaForm() {
@@ -937,18 +940,19 @@ function showCompraForm() {
         </div>
     `;
     
-    // Remover modal existente si hay uno
+    // Remover modal anterior si existe
     const existingModal = document.getElementById('compraModal');
     if (existingModal) {
         existingModal.remove();
     }
     
-    // Agregar modal al body
+    // Agregar nuevo modal
     document.body.insertAdjacentHTML('beforeend', modal);
     
     // Mostrar modal
-    const modalElement = new bootstrap.Modal(document.getElementById('compraModal'));
-    modalElement.show();
+    const modalElement = document.getElementById('compraModal');
+    const bsModal = new bootstrap.Modal(modalElement);
+    bsModal.show();
     
     // Configurar fecha actual
     document.querySelector('input[name="fecha"]').value = new Date().toISOString().split('T')[0];
@@ -988,22 +992,8 @@ function showEmpleadoForm() {
                                 <input type="text" class="form-control" name="puesto" required>
                             </div>
                             <div class="mb-3">
-                                <label class="form-label">Fecha de Contratación *</label>
-                                <input type="date" class="form-control" name="fecha_contratacion" required>
-                            </div>
-                            <div class="mb-3">
                                 <label class="form-label">Salario *</label>
                                 <input type="number" class="form-control" name="salario" step="0.01" required>
-                            </div>
-                            <div class="mb-3">
-                                <label class="form-label">Estatus *</label>
-                                <select class="form-control" name="estatus" required>
-                                    <option value="">Seleccionar estatus</option>
-                                    <option value="Activo">Activo</option>
-                                    <option value="Inactivo">Inactivo</option>
-                                    <option value="Vacaciones">Vacaciones</option>
-                                    <option value="Baja">Baja</option>
-                                </select>
                             </div>
                         </form>
                     </div>
@@ -1016,18 +1006,19 @@ function showEmpleadoForm() {
         </div>
     `;
     
-    // Remover modal existente si hay uno
+    // Remover modal anterior si existe
     const existingModal = document.getElementById('empleadoModal');
     if (existingModal) {
         existingModal.remove();
     }
     
-    // Agregar modal al body
+    // Agregar nuevo modal
     document.body.insertAdjacentHTML('beforeend', modal);
     
     // Mostrar modal
-    const modalElement = new bootstrap.Modal(document.getElementById('empleadoModal'));
-    modalElement.show();
+    const modalElement = document.getElementById('empleadoModal');
+    const bsModal = new bootstrap.Modal(modalElement);
+    bsModal.show();
 }
 
 function showEmpleadoEditForm(empleado) {
@@ -1079,18 +1070,19 @@ function showEmpleadoEditForm(empleado) {
         </div>
     `;
     
-    // Remover modal existente si hay uno
+    // Remover modal anterior si existe
     const existingModal = document.getElementById('empleadoModal');
     if (existingModal) {
         existingModal.remove();
     }
     
-    // Agregar modal al body
+    // Agregar nuevo modal
     document.body.insertAdjacentHTML('beforeend', modal);
     
     // Mostrar modal
-    const modalElement = new bootstrap.Modal(document.getElementById('empleadoModal'));
-    modalElement.show();
+    const modalElement = document.getElementById('empleadoModal');
+    const bsModal = new bootstrap.Modal(modalElement);
+    bsModal.show();
 }
 
 function showProveedorForm() {
@@ -1109,12 +1101,12 @@ function showProveedorForm() {
                                 <input type="text" class="form-control" name="nombre" required>
                             </div>
                             <div class="mb-3">
-                                <label class="form-label">Teléfono *</label>
-                                <input type="tel" class="form-control" name="telefono" required>
-                            </div>
-                            <div class="mb-3">
                                 <label class="form-label">Producto Suministrado *</label>
                                 <input type="text" class="form-control" name="producto_suministrado" placeholder="ej: Masa de maíz, Harina, Bolsas" required>
+                            </div>
+                            <div class="mb-3">
+                                <label class="form-label">Teléfono *</label>
+                                <input type="tel" class="form-control" name="telefono" required>
                             </div>
                             <div class="mb-3">
                                 <label class="form-label">Frecuencia de Entrega *</label>
@@ -1138,18 +1130,19 @@ function showProveedorForm() {
         </div>
     `;
     
-    // Remover modal existente si hay uno
+    // Remover modal anterior si existe
     const existingModal = document.getElementById('proveedorModal');
     if (existingModal) {
         existingModal.remove();
     }
     
-    // Agregar modal al body
+    // Agregar nuevo modal
     document.body.insertAdjacentHTML('beforeend', modal);
     
     // Mostrar modal
-    const modalElement = new bootstrap.Modal(document.getElementById('proveedorModal'));
-    modalElement.show();
+    const modalElement = document.getElementById('proveedorModal');
+    const bsModal = new bootstrap.Modal(modalElement);
+    bsModal.show();
 }
 
 // Funciones para guardar datos
@@ -1159,16 +1152,34 @@ async function saveCliente() {
     
     const data = {
         nombre: formData.get('nombre'),
+        apellido: formData.get('apellido') || '',
         telefono: formData.get('telefono'),
         email: formData.get('email'),
         direccion: formData.get('direccion')
     };
     
-    const success = await insertCliente(data);
-    if (success) {
-        const modal = bootstrap.Modal.getInstance(document.getElementById('clienteModal'));
-        modal.hide();
-        form.reset();
+    try {
+        const response = await fetch('/api/clientes', {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json'
+            },
+            body: JSON.stringify(data)
+        });
+        
+        const result = await response.json();
+        
+        if (result.success) {
+            showAlert('Cliente agregado correctamente', 'success');
+            const modal = bootstrap.Modal.getInstance(document.getElementById('clienteModal'));
+            modal.hide();
+            form.reset();
+            loadClientes();
+        } else {
+            showAlert('Error al agregar cliente: ' + result.message, 'danger');
+        }
+    } catch (error) {
+        showAlert('Error de conexión: ' + error.message, 'danger');
     }
 }
 
@@ -1228,18 +1239,19 @@ function showClienteEditForm(cliente) {
         </div>
     `;
     
-    // Remover modal existente si hay uno
+    // Remover modal anterior si existe
     const existingModal = document.getElementById('clienteModal');
     if (existingModal) {
         existingModal.remove();
     }
     
-    // Agregar modal al body
+    // Agregar nuevo modal
     document.body.insertAdjacentHTML('beforeend', modal);
     
     // Mostrar modal
-    const modalElement = new bootstrap.Modal(document.getElementById('clienteModal'));
-    modalElement.show();
+    const modalElement = document.getElementById('clienteModal');
+    const bsModal = new bootstrap.Modal(modalElement);
+    bsModal.show();
 }
 
 // Función para guardar edición de cliente
@@ -1311,16 +1323,32 @@ async function saveProducto() {
     const data = {
         nombre: formData.get('nombre'),
         precio: parseFloat(formData.get('precio')),
-        stock: parseFloat(formData.get('stock')),
-        unidad_medida: formData.get('unidad_medida'),
-        categoria: formData.get('categoria')
+        stock: parseInt(formData.get('stock')),
+        descripcion: formData.get('descripcion') || ''
     };
     
-    const success = await insertProducto(data);
-    if (success) {
-        const modal = bootstrap.Modal.getInstance(document.getElementById('productoModal'));
-        modal.hide();
-        form.reset();
+    try {
+        const response = await fetch('/api/productos', {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json'
+            },
+            body: JSON.stringify(data)
+        });
+        
+        const result = await response.json();
+        
+        if (result.success) {
+            showAlert('Producto agregado correctamente', 'success');
+            const modal = bootstrap.Modal.getInstance(document.getElementById('productoModal'));
+            modal.hide();
+            form.reset();
+            loadProductos();
+        } else {
+            showAlert('Error al agregar producto: ' + result.message, 'danger');
+        }
+    } catch (error) {
+        showAlert('Error de conexión: ' + error.message, 'danger');
     }
 }
 
@@ -1331,9 +1359,7 @@ async function saveEmpleado() {
     const data = {
         nombre: formData.get('nombre'),
         puesto: formData.get('puesto'),
-        fecha_contratacion: formData.get('fecha_contratacion'),
-        salario: parseFloat(formData.get('salario')),
-        estatus: formData.get('estatus')
+        salario: parseFloat(formData.get('salario'))
     };
     
     try {
@@ -1453,9 +1479,9 @@ async function saveProveedor() {
     
     const data = {
         nombre: formData.get('nombre'),
+        contacto: formData.get('producto_suministrado'),
         telefono: formData.get('telefono'),
-        producto_suministrado: formData.get('producto_suministrado'),
-        frecuencia_entrega: formData.get('frecuencia_entrega')
+        direccion: formData.get('frecuencia_entrega')
     };
     
     try {
@@ -1546,18 +1572,19 @@ function showProveedorEditForm(proveedor) {
         </div>
     `;
     
-    // Remover modal existente si hay uno
+    // Remover modal anterior si existe
     const existingModal = document.getElementById('proveedorModal');
     if (existingModal) {
         existingModal.remove();
     }
     
-    // Agregar modal al body
+    // Agregar nuevo modal
     document.body.insertAdjacentHTML('beforeend', modal);
     
     // Mostrar modal
-    const modalElement = new bootstrap.Modal(document.getElementById('proveedorModal'));
-    modalElement.show();
+    const modalElement = document.getElementById('proveedorModal');
+    const bsModal = new bootstrap.Modal(modalElement);
+    bsModal.show();
 }
 
 // Función para guardar edición de proveedor
