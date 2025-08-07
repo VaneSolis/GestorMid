@@ -1,11 +1,11 @@
 const mysql = require('mysql2/promise');
 
 const dbConfig = {
-  host: process.env.DB_HOST || '127.0.0.1',
-  port: process.env.DB_PORT || 3306,
-  user: process.env.DB_USER || 'root',
-  password: process.env.DB_PASSWORD || 'Mazerunner12',
-  database: process.env.DB_NAME || 'tortillerialaherradurasolis',
+  host: process.env.MYSQL_ADDON_HOST || process.env.DB_HOST || '127.0.0.1',
+  port: process.env.MYSQL_ADDON_PORT || process.env.DB_PORT || 3306,
+  user: process.env.MYSQL_ADDON_USER || process.env.DB_USER || 'root',
+  password: process.env.MYSQL_ADDON_PASSWORD || process.env.DB_PASSWORD || 'Mazerunner12',
+  database: process.env.MYSQL_ADDON_DB || process.env.DB_NAME || 'tortillerialaherradurasolis',
   // Configuraciones adicionales para mejor estabilidad
   acquireTimeout: 60000,
   timeout: 60000,
@@ -19,6 +19,15 @@ console.log('Puerto:', dbConfig.port);
 console.log('Usuario:', dbConfig.user);
 console.log('Base de datos:', dbConfig.database);
 console.log('Contraseña:', dbConfig.password ? '***DEFINIDA***' : 'NO DEFINIDA');
+
+// Verificar si estamos usando Clever Cloud
+if (process.env.MYSQL_ADDON_HOST) {
+  console.log('✅ Detectado Clever Cloud MySQL Add-on');
+} else if (process.env.DB_HOST) {
+  console.log('✅ Detectadas variables de entorno personalizadas');
+} else {
+  console.log('⚠️  Usando configuración local por defecto');
+}
 
 const pool = mysql.createPool({
   ...dbConfig,
